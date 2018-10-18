@@ -13,24 +13,20 @@ class Home extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ user: nextProps.user });
-  }
-
   componentWillMount() {
     this.props.getUserData();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...this.state, user: nextProps.user });
+  }
+
   renderHelper() {
-    if (!this.props.user) {
-      return (
-        <div>
-          <HereMap data={this.state.user} />
-        </div>
-      );
-    } else {
-      return <div>Loading...</div>;
-    }
+    return (
+      <div>
+        <HereMap user={this.state.user} />
+      </div>
+    );
   }
 
   render() {
@@ -39,7 +35,7 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
-  return { user: state.user };
+  return { user: state.user.user };
 }
 
 export default connect(

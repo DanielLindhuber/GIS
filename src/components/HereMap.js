@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { loadRoute, loadIncidents } from "../scripts/map_scripts";
 
 class HereMap extends Component {
-  componentDidMount() {
+  componentDidUpdate() {
     const platform = new window.H.service.Platform({
       app_id: "FNWch6Lh7ZVz5UZAmhCH",
       app_code: "924WDQuFvEz_H8x5pGYCDA",
@@ -23,10 +23,9 @@ class HereMap extends Component {
     });
     map.addObject(htlMarker);
     // ---------------------------------------------------------------------------------------------
-    loadRoute(platform, map, { lat: 48.1983045, lng: 13.101644299999975 }); // { lat: 48.1983045, lng: 13.101644299999975 }
+    loadRoute(platform, map, this.props.user.coordinates); // { lat: 48.1983045, lng: 13.101644299999975 }
     loadIncidents(map, defaultLayers);
-
-    console.log(this.props);
+    // ---------------------------------------------------------------------------------------------
   }
 
   render() {

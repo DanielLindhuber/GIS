@@ -3,14 +3,14 @@ const htlCoord = {
   lng: 13.027800999999954
 };
 
-export function loadRoute(platform, map, user) {
+export function loadRoute(platform, map, coordinates) {
   calculateRouteFromAtoB(platform);
 
-  var htlMarker = new window.H.map.Marker({
-    lat: user.lat,
-    lng: user.lng
+  var ownMarker = new window.H.map.Marker({
+    lat: coordinates.lat,
+    lng: coordinates.lng
   });
-  map.addObject(htlMarker);
+  map.addObject(ownMarker);
 
   function calculateRouteFromAtoB(platform) {
     var router = platform.getRoutingService(),
@@ -19,7 +19,7 @@ export function loadRoute(platform, map, user) {
         representation: "display",
         routeattributes: "waypoints,summary,shape,legs",
         maneuverattributes: "direction,action",
-        waypoint0: `${user.lat},${user.lng}`,
+        waypoint0: `${coordinates.lat},${coordinates.lng}`,
         waypoint1: `${htlCoord.lat},${htlCoord.lng}`
       };
     router.calculateRoute(routeRequestParams, onSuccess, onError);
