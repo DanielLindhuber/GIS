@@ -7,14 +7,31 @@ class Header extends Component {
   renderLinks() {
     if (this.props.authenticated) {
       return (
-        <div>
-          <Link to="/" className="btn btn-primary">
-            Home
-          </Link>
-          <Link to="/signout" className="btn btn-primary">
-            Sign Out
-          </Link>
-        </div>
+        <nav className="navbar navbar-dark header bg-primary">
+          <div className="collapse navbar-collapse">
+            <ul className="nav navbar-nav">
+              <li>
+                <Link to="/home" className="navbarItem">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/heat" className="navbarItem">
+                  Übersicht
+                </Link>
+              </li>
+              <li>
+                <a className="navbarItem">Platzhalter</a>
+              </li>
+              <li>
+                <Link to="/signout" className="navbarItem">
+                  <span className="glyphicon glyphicon-log-in" />
+                  Abmelden
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
       );
     } else {
     }

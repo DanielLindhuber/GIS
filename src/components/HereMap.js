@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { loadRoute, loadIncidents } from "../scripts/map_scripts";
+import "./styles/HereMap.css";
 
 class HereMap extends Component {
   componentDidUpdate() {
@@ -29,7 +30,11 @@ class HereMap extends Component {
   }
 
   render() {
-    return <div style={{ width: 800, height: 600 }} ref="map" />;
+    return (
+      <div id="heremapObject" className="embed-responsive embed-responsive">
+        <div id="heremap" className="embed-responsive-item" ref="map" />
+      </div>
+    );
   }
 }
 

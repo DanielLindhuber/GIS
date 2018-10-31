@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
-
-import requireAuth from "./requireAuth";
 import HereMap from "./HereMap";
 
 class Home extends Component {
@@ -23,8 +21,13 @@ class Home extends Component {
 
   renderHelper() {
     return (
-      <div>
-        <HereMap user={this.state.user} />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-8">
+            <HereMap user={this.state.user} />
+          </div>
+          <div className="col-md-4">Platzhalter</div>
+        </div>
       </div>
     );
   }
@@ -42,3 +45,4 @@ export default connect(
   mapStateToProps,
   actions
 )(Home);
+// <HereMap user={this.state.user} />

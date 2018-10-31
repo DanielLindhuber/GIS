@@ -1,8 +1,17 @@
 .header {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .header a {
   margin: 0 3px;
+}
+
+.navbar {
+  background-color: #014784;
+}
+
+.navbarItem {
+  color: white;
 }
