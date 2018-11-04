@@ -1,23 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
-import "./styles/HeatMap.css";
+import "../styles/HeatMap.css";
 
 class HeatMap extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      coords: [],
-      wasRendered: false
-    };
-
-    this.getCoords = this.getCoords.bind(this);
-  }
-
-  componentDidMount() {
-    this.getCoords();
-  }
-
   componentDidUpdate() {
+    console.log(this.props);
     const platform = new window.H.service.Platform({
       app_id: "FNWch6Lh7ZVz5UZAmhCH",
       app_code: "924WDQuFvEz_H8x5pGYCDA",
@@ -55,7 +41,7 @@ class HeatMap extends Component {
     });
 
     // Add the data
-    heatmapProvider.addData(this.state.coords);
+    heatmapProvider.addData(this.props.data);
 
     // Create a semi-transparent heat map layer
     var heatmapLayer = new window.H.map.layer.TileLayer(heatmapProvider, {
@@ -64,23 +50,6 @@ class HeatMap extends Component {
 
     // Add the layer to the map
     map.addLayer(heatmapLayer);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!this.state.coords.length) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getCoords() {
-    const token = localStorage.getItem("token");
-    axios
-      .get("http://localhost:3090/heat", {
-        headers: { authorization: token }
-      })
-      .then(response => this.setState({ coords: response.data }));
   }
 
   render() {

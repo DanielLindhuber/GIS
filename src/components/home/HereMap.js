@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { loadRoute, loadIncidents } from "../scripts/map_scripts";
-import "./styles/HereMap.css";
+import { loadRoute, loadIncidents } from "../../scripts/map_scripts";
+import "../styles/HereMap.css";
 
 class HereMap extends Component {
   componentDidUpdate() {

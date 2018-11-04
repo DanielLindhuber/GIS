@@ -18,7 +18,7 @@ class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <LinkContainer to="/heat">
+              <LinkContainer to="/overview">
                 <NavItem>Übersicht</NavItem>
               </LinkContainer>
               <LinkContainer to="/select">
@@ -36,35 +36,6 @@ class Header extends Component {
           </Navbar.Collapse>
         </Navbar>
       );
-      /*
-      return (
-        <nav className="navbar navbar-dark header bg-primary">
-          <div className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li>
-                <Link to="/home" className="navbarItem">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/heat" className="navbarItem">
-                  Übersicht
-                </Link>
-              </li>
-              <li>
-                <a className="navbarItem">Platzhalter</a>
-              </li>
-              <li>
-                <Link to="/signout" className="navbarItem">
-                  <span className="glyphicon glyphicon-log-in" />
-                  Abmelden
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      );
-      */
     } else {
     }
   }
@@ -79,5 +50,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Header);
-
-// className="header"

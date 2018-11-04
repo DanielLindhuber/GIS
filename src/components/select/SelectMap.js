@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { loadRoute, loadIncidents } from "../scripts/map_scripts";
-import "./styles/SelectMap.css";
+import { loadRoute, loadIncidents } from "../../scripts/map_scripts";
+import "../styles/SelectMap.css";
 
 const htlCoord = {
   lat: 48.243084,

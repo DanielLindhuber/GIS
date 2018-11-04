@@ -1,24 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import HereMap from "./HereMap";
 import HomeTable from "./HomeTable";
 import { Grid, Row, Col } from "react-bootstrap";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {}
-    };
-  }
-
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUserData();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ ...this.state, user: nextProps.user });
   }
 
   renderHelper() {
@@ -29,7 +18,7 @@ class Home extends Component {
             <HomeTable />
           </Col>
           <Col sm={6} md={6}>
-            <HereMap user={this.state.user} />
+            <HereMap user={this.props.user} />
           </Col>
           <Col sm={6} md={3} />
         </Row>
@@ -50,4 +39,3 @@ export default connect(
   mapStateToProps,
   actions
 )(Home);
-// <HereMap user={this.state.user} />

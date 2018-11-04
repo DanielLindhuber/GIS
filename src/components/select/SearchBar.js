@@ -22,7 +22,7 @@ export default class SearchBar extends Component {
   }
 
   handleSubmit() {
-    this.props.callback(this.state.class, this.state.name);
+    this.props.callback({ className: this.state.class, name: this.state.name });
   }
 
   render() {
