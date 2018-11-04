@@ -4,13 +4,12 @@ const htlCoord = {
 };
 
 export function loadRoute(platform, map, coordinates) {
-  calculateRouteFromAtoB(platform);
-
   var ownMarker = new window.H.map.Marker({
     lat: coordinates.lat,
     lng: coordinates.lng
   });
   map.addObject(ownMarker);
+  calculateRouteFromAtoB(platform);
 
   function calculateRouteFromAtoB(platform) {
     var router = platform.getRoutingService(),

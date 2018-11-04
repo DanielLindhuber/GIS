@@ -12,6 +12,7 @@ import Signin from "./components/auth/Signin";
 import Signout from "./components/auth/Signout";
 import Home from "./components/Home";
 import HeatMap from "./components/HeatMap";
+import Select from "./components/Select";
 
 const store = createStore(
   reducers,
@@ -40,6 +41,14 @@ ReactDOM.render(
             render={() => (
               <div>
                 <HeatMap />
+              </div>
+            )}
+          />
+          <Route
+            path="/select"
+            render={() => (
+              <div>
+                <Select />
               </div>
             )}
           />

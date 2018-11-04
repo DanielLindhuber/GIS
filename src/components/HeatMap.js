@@ -6,13 +6,14 @@ class HeatMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coords: []
+      coords: [],
+      wasRendered: false
     };
 
     this.getCoords = this.getCoords.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getCoords();
   }
 
@@ -64,9 +65,14 @@ class HeatMap extends Component {
     // Add the layer to the map
     map.addLayer(heatmapLayer);
   }
-  //----------------------------------------------------------------------------------------
-  //----------------------------------------------------------------------------------------
-  //----------------------------------------------------------------------------------------
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!this.state.coords.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   getCoords() {
     const token = localStorage.getItem("token");

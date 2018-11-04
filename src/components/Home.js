@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import HereMap from "./HereMap";
+import HomeTable from "./HomeTable";
+import { Grid, Row, Col } from "react-bootstrap";
 
 class Home extends Component {
   constructor(props) {
@@ -21,14 +23,17 @@ class Home extends Component {
 
   renderHelper() {
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-8">
+      <Grid>
+        <Row className="show-grid">
+          <Col sm={6} md={3}>
+            <HomeTable />
+          </Col>
+          <Col sm={6} md={6}>
             <HereMap user={this.state.user} />
-          </div>
-          <div className="col-md-4">Platzhalter</div>
-        </div>
-      </div>
+          </Col>
+          <Col sm={6} md={3} />
+        </Row>
+      </Grid>
     );
   }
 
