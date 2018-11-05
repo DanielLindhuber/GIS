@@ -7,17 +7,9 @@ import SelectMap from "./SelectMap";
 import SelectTable from "./SelectTable";
 
 class Select extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {}
-    };
-    this.getSelectedUser = this.getSelectedUser.bind(this);
-  }
-
-  getSelectedUser(row) {
-    this.setState({ user: row });
-  }
+  getSelectedUser = row => {
+    this.props.setSelectSingleUserData(row);
+  };
 
   render() {
     return (
@@ -32,7 +24,7 @@ class Select extends Component {
             />
           </Col>
           <Col sm={6} md={9}>
-            <SelectMap user={this.state.user} />
+            <SelectMap data={this.props.singleUser} />
           </Col>
         </Row>
       </Grid>
@@ -41,7 +33,10 @@ class Select extends Component {
 }
 
 function mapStateToProps(state) {
-  return { selectData: state.select.selectData };
+  return {
+    selectData: state.select.selectData,
+    singleUser: state.select.singleUser
+  };
 }
 
 export default connect(

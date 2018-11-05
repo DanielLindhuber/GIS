@@ -8,90 +8,99 @@ const htlCoord = {
 };
 
 class SelectMap extends Component {
-  componentDidUpdate() {
-    const coordinates = this.props.user.coordinates;
-    const platform = new window.H.service.Platform({
+  // <-- lifecycle -->
+  componentDidMount() {
+    this.platform = new window.H.service.Platform({
       app_id: "FNWch6Lh7ZVz5UZAmhCH",
       app_code: "924WDQuFvEz_H8x5pGYCDA",
       useHTTPS: true
     });
-    const defaultLayers = platform.createDefaultLayers();
-    console.log("false");
-    var map = new window.H.Map(this.refs.selectmap, defaultLayers.normal.map, {
-      zoom: 11,
-      center: { lat: 48.25573, lng: 13.0443 }
-    });
-    var behavior = new window.H.mapevents.Behavior(
-      new window.H.mapevents.MapEvents(map)
+    this.defaultLayers = this.platform.createDefaultLayers();
+    this.map = new window.H.Map(
+      this.refs.selectmap,
+      this.defaultLayers.normal.map,
+      {
+        zoom: 11,
+        center: { lat: 48.25573, lng: 13.0443 }
+      }
     );
-    var ui = window.H.ui.UI.createDefault(map, defaultLayers);
+    this.behavior = new window.H.mapevents.Behavior(
+      new window.H.mapevents.MapEvents(this.map)
+    );
+    this.ui = window.H.ui.UI.createDefault(this.map, this.defaultLayers);
     var htlMarker = new window.H.map.Marker({
       lat: 48.243084,
       lng: 13.027800999999954
     });
-    map.addObject(htlMarker);
-    this.setState({ rendered: true });
+    this.map.addObject(htlMarker);
 
-    var ownMarker = new window.H.map.Marker({
-      lat: coordinates.lat,
-      lng: coordinates.lng
-    });
-    map.addObject(ownMarker);
-    calculateRouteFromAtoB(platform);
-
-    function calculateRouteFromAtoB(platform) {
-      var router = platform.getRoutingService(),
-        routeRequestParams = {
-          mode: "fastest;car",
-          representation: "display",
-          routeattributes: "waypoints,summary,shape,legs",
-          maneuverattributes: "direction,action",
-          waypoint0: `${coordinates.lat},${coordinates.lng}`,
-          waypoint1: `${htlCoord.lat},${htlCoord.lng}`
-        };
-      router.calculateRoute(routeRequestParams, onSuccess, onError);
-    }
-
-    function onSuccess(result) {
-      var route = result.response.route[0];
-      addRouteShapeToMap(route);
-    }
-
-    function onError(error) {
-      console.log(error);
-    }
-
-    function addRouteShapeToMap(route) {
-      var lineString = new window.H.geo.LineString(),
-        routeShape = route.shape,
-        polyline;
-
-      routeShape.forEach(function(point) {
-        var parts = point.split(",");
-        lineString.pushLatLngAlt(parts[0], parts[1]);
-      });
-
-      var group = new window.H.map.Group();
-      group.removeAll();
-      group.addObject(
-        new window.H.map.Polyline(lineString, {
-          style: { lineWidth: 4, strokeColor: "rgba(0, 128, 255, 0.7)" }
-        })
-      );
-
-      map.addObject(group);
-      map.setViewBounds(group.getBounds(), true);
-    }
-    map.setBaseLayer(defaultLayers.normal.traffic);
-    map.addLayer(defaultLayers.incidents);
+    this.map.setBaseLayer(this.defaultLayers.normal.traffic);
+    this.map.addLayer(this.defaultLayers.incidents);
+    this.group = new window.H.map.Group();
+    this.markerGroup = new window.H.map.Group();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.user == nextProps.user) {
-      return false;
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.data.coordinates) {
     } else {
-      return true;
+      this.group.removeAll();
+      this.markerGroup.removeAll();
+      this.coordinates = nextProps.data.coordinates;
+      var ownMarker = new window.H.map.Marker({
+        lat: this.coordinates.lat,
+        lng: this.coordinates.lng
+      });
+      this.markerGroup.addObject(ownMarker);
+      this.map.addObject(this.markerGroup);
+      this.calculateRouteFromAtoB(this.platform);
     }
+  }
+
+  // <-- methods -->
+
+  calculateRouteFromAtoB = platform => {
+    var router = platform.getRoutingService(),
+      routeRequestParams = {
+        mode: "fastest;car",
+        representation: "display",
+        routeattributes: "waypoints,summary,shape,legs",
+        maneuverattributes: "direction,action",
+        waypoint0: `${this.coordinates.lat},${this.coordinates.lng}`,
+        waypoint1: `${htlCoord.lat},${htlCoord.lng}`
+      };
+    router.calculateRoute(routeRequestParams, this.onSuccess, this.onError);
+  };
+
+  onSuccess = result => {
+    var route = result.response.route[0];
+    this.addRouteShapeToMap(route);
+  };
+
+  onError = error => {
+    console.log(error);
+  };
+
+  addRouteShapeToMap = route => {
+    var lineString = new window.H.geo.LineString(),
+      routeShape = route.shape;
+
+    routeShape.forEach(function(point) {
+      var parts = point.split(",");
+      lineString.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    this.group.addObject(
+      new window.H.map.Polyline(lineString, {
+        style: { lineWidth: 4, strokeColor: "rgba(0, 128, 255, 0.7)" }
+      })
+    );
+
+    this.map.addObject(this.group);
+    this.map.setViewBounds(this.group.getBounds(), true);
+  };
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {

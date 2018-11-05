@@ -4,7 +4,8 @@ import {
   AUTH_ERROR,
   REQUEST_USER,
   REQUEST_OVERVIEW,
-  REQUEST_SELECT
+  REQUEST_SELECT,
+  SET_SELECT_USER
 } from "./types";
 
 // signin
@@ -78,4 +79,12 @@ export const getSelectData = props => async dispatch => {
   } catch (e) {
     console.log(e);
   }
+};
+
+// Get select single user data data
+export const setSelectSingleUserData = user => {
+  return {
+    type: SET_SELECT_USER,
+    payload: user
+  };
 };
