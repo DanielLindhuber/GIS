@@ -3,7 +3,6 @@ import { reduxForm, Field } from "redux-form";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import "../styles/Signin.css";
 
 class Signin extends Component {
   onSubmit = formProps => {
@@ -16,6 +15,26 @@ class Signin extends Component {
     const { handleSubmit } = this.props;
 
     return (
+      <header className="login-header">
+        HIIII
+      </header>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.errorMessage };
+}
+
+export default compose(
+  connect(
+    mapStateToProps,
+    actions
+  ),
+  reduxForm({ form: "signin" })
+)(Signin);
+
+/*
       <div id="login">
         <h3 className="text-center text-white pt-5">Htl-Braunau GIS</h3>
         <div className="container">
@@ -48,9 +67,6 @@ class Signin extends Component {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="password" className="text-info">
-                      Password:
-                    </label>
                     <br />
                     <Field
                       name="password"
@@ -66,7 +82,7 @@ class Signin extends Component {
                     <button
                       type="submit"
                       name="submit"
-                      className="btn btn-info btn-md"
+                      className=""
                       value="submit"
                     >
                       Sign In!
@@ -80,18 +96,4 @@ class Signin extends Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.errorMessage };
-}
-
-export default compose(
-  connect(
-    mapStateToProps,
-    actions
-  ),
-  reduxForm({ form: "signin" })
-)(Signin);
+*/

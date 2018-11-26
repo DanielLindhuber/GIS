@@ -3,6 +3,8 @@ import {
   AUTH_USER,
   AUTH_ERROR,
   REQUEST_USER,
+  REQUEST_USER_CARPOOLS,
+  REQUEST_USER_DRIVER_CARPOOLS,
   REQUEST_OVERVIEW,
   REQUEST_SELECT,
   SET_SELECT_USER
@@ -48,6 +50,40 @@ export const getUserData = () => async dispatch => {
   }
 };
 
+// get carpools
+export const getUserCarpools = () => async dispatch => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      "http://localhost:3090/carpool/getCarpools",
+      {
+        headers: { authorization: token }
+      }
+    );
+
+    dispatch({ type: REQUEST_USER_CARPOOLS, payload: response.data });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// get driver carpools
+export const getUserDriverCarpools = () => async dispatch => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      "http://localhost:3090/carpool/getDriverCarpools",
+      {
+        headers: { authorization: token }
+      }
+    );
+
+    dispatch({ type: REQUEST_USER_DRIVER_CARPOOLS, payload: response.data });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // Get overview data
 export const getOverviewData = () => async dispatch => {
   try {
@@ -88,3 +124,22 @@ export const setSelectSingleUserData = user => {
     payload: user
   };
 };
+
+export const createCarpool = () => {
+  try {
+    const token = localStorage.getItem("token");
+    axios.post("http://localhost:3090/carpool/create", {
+      headers: { authorization: token }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deleteCarpool = user => {};
+
+export const leaveCarpool = user => {};
+
+export const joinCarpool = user => {};
+
+export const getCarpoolsRadius = user => {};

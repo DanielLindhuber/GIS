@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { loadRoute, loadIncidents } from "../../scripts/map_scripts";
-import "../styles/SelectMap.css";
 
 const htlCoord = {
   lat: 48.243084,
@@ -41,11 +39,11 @@ class SelectMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.data.coordinates) {
+    if (!nextProps.data.location) {
     } else {
       this.group.removeAll();
       this.markerGroup.removeAll();
-      this.coordinates = nextProps.data.coordinates;
+      this.coordinates = nextProps.data.location.coordinates;
       var ownMarker = new window.H.map.Marker({
         lat: this.coordinates.lat,
         lng: this.coordinates.lng
@@ -74,6 +72,13 @@ class SelectMap extends Component {
   onSuccess = result => {
     var route = result.response.route[0];
     this.addRouteShapeToMap(route);
+    alert(
+      `Weg: ${Math.round(
+        result.response.route[0].summary.distance * 0.001
+      )}km, Zeit: ${Math.round(
+        result.response.route[0].summary.trafficTime / 60
+      )}min`
+    );
   };
 
   onError = error => {
@@ -104,11 +109,7 @@ class SelectMap extends Component {
   }
 
   render() {
-    return (
-      <div id="selectmapObject" className="embed-responsive embed-responsive">
-        <div id="selectmap" className="embed-responsive-item" ref="selectmap" />
-      </div>
-    );
+    return <div style={{ width: "100%", height: 650 }} ref="selectmap" />;
   }
 }
 

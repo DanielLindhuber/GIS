@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import "./styles/HeaderStyle.css";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -23,6 +22,9 @@ class Header extends Component {
               </LinkContainer>
               <LinkContainer to="/select">
                 <NavItem>Schülerauswahl</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/carpool">
+                <NavItem>Fahrgemeinschaften</NavItem>
               </LinkContainer>
             </Nav>
             <Nav pullRight>

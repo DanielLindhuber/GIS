@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import "../styles/HeatMap.css";
 
 class HeatMap extends Component {
   componentDidUpdate() {
-    console.log(this.props);
     const platform = new window.H.service.Platform({
       app_id: "FNWch6Lh7ZVz5UZAmhCH",
       app_code: "924WDQuFvEz_H8x5pGYCDA",
@@ -53,11 +51,7 @@ class HeatMap extends Component {
   }
 
   render() {
-    return (
-      <div id="heatmapObject">
-        <div ref="heatmap" id="heatmap" />
-      </div>
-    );
+    return <div style={{ width: "100%", height: 650 }} ref="heatmap" />;
   }
 }
 

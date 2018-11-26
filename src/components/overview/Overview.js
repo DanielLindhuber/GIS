@@ -9,7 +9,6 @@ class Overview extends Component {
   }
 
   render() {
-    console.log(this.props.overview);
     return (
       <div>
         <HeatMap data={this.props.overview} />

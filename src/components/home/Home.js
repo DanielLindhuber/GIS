@@ -8,9 +8,11 @@ import { Grid, Row, Col } from "react-bootstrap";
 class Home extends Component {
   componentDidMount() {
     this.props.getUserData();
+    this.props.getUserCarpools();
+    this.props.getUserDriverCarpools();
   }
 
-  renderHelper() {
+  render() {
     return (
       <Grid>
         <Row className="show-grid">
@@ -18,21 +20,25 @@ class Home extends Component {
             <HomeTable />
           </Col>
           <Col sm={6} md={6}>
-            <HereMap user={this.props.user} />
+            <HereMap data={{ user: this.props.user.user, target: {} }} />
           </Col>
           <Col sm={6} md={3} />
         </Row>
       </Grid>
     );
   }
-
-  render() {
-    return this.renderHelper();
-  }
 }
 
 function mapStateToProps(state) {
-  return { user: state.user.user };
+  /*
+  user
+  -------
+  carpools: [],
+  driverCarpools: [],
+  overview: [],
+  user: {}
+  */
+  return { user: state.user };
 }
 
 export default connect(

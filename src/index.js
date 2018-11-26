@@ -13,6 +13,9 @@ import Signout from "./components/auth/Signout";
 import Home from "./components/home/Home";
 import Overview from "./components/overview/Overview";
 import Select from "./components/select/Select";
+import Carpool from "./components/carpool/Carpool";
+
+import './styles/css/style.css';
 
 const store = createStore(
   reducers,
@@ -49,6 +52,14 @@ ReactDOM.render(
             render={() => (
               <div>
                 <Select />
+              </div>
+            )}
+          />
+          <Route
+            path="/carpool"
+            render={() => (
+              <div>
+                <Carpool />
               </div>
             )}
           />
